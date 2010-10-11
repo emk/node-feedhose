@@ -59,6 +59,7 @@ class FeedHoseClient extends events.EventEmitter
 
   # We've received some JSON!  Parse it and notify our listeners.
   _on_json: (unparsed_json) ->
+    console.log("JSON: #{unparsed_json}")
     json = JSON.parse(unparsed_json)['feedHose']
     @seed = json['metadata']['seed']
     if json['items']
