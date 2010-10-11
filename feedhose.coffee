@@ -60,7 +60,10 @@ class exports.Client extends events.EventEmitter
     json = JSON.parse(unparsed_json)['feedHose']
     @seed = json['metadata']['seed']
     if json['items']
-      for item in json['items']['item']
+      # Fix strange JSON encoding.
+      items_or_item = json['items']['item']
+      items = if items_or_item.length? then items_or_item else [items_or_item]
+      for item in items
         @emit('item', item)
     @_request_items()
 
