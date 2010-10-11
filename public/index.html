@@ -40,13 +40,20 @@ this.to_html = function (str) {
 
 function connectToServer() {
   var socket = new io.Socket();
+  socket.connect();
   socket.on('connect', function () {
     $('#connecting').hide();
   });
   socket.on('message', function (item) {
     $('#hose').prepend(tmpl('item_tmpl', item));
   });
-  socket.connect();
+  socket.on('disconnect', reconnect);
+}
+
+// Schedule a reconnection attempt shortly.  Note that this function
+// does not currently get called if a connection attempt fails.
+function reconnect() {
+    setTimeout(connectToServer, 5000);
 }
 
 // Ask jQuery to run this code once the page is fully loaded.
