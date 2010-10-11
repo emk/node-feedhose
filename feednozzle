@@ -31,6 +31,7 @@ class FeedHoseClient extends events.EventEmitter
       req = @http_client.request 'GET', @_path(), host: @host
       req.end()
       req.on 'response', @_on_response
+      req.on 'error', @_on_error
     catch error
       @_on_error(error)
 
@@ -41,6 +42,7 @@ class FeedHoseClient extends events.EventEmitter
         throw "Unexpected HTTP status code: #{res.statusCode}"
       res.setEncoding 'utf8'
       @data = []
+      res.on 'error', @_on_error
       res.on 'data', (chunk) =>
         try
           @data.push chunk
@@ -65,7 +67,7 @@ class FeedHoseClient extends events.EventEmitter
     @_request_items()
 
   # Log an error to the console, wait 3 minutes, and try again.
-  _on_error: (error) ->
+  _on_error: (error) =>
     console.log "ERROR: #{error}\n#{error.stack}"
     setTimeout @_request_items, 3*60*1000
 
