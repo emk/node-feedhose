@@ -66,13 +66,13 @@ class FeedHoseClient extends events.EventEmitter
 
   # Log an error to the console, wait 3 minutes, and try again.
   _on_error: (error) ->
-    console.log "ERROR: #{error}"
+    console.log "ERROR: #{error}\n#{error.stack}"
     setTimeout @_request_items, 3*60*1000
 
   # Called when a listener fails.  Just log the error and let our
   # regular code continue.
   _on_listener_error: (error) =>
-    console.log "ERROR: #{error}"
+    console.log "LISTENER ERROR: #{error}\n#{error.stack}"
 
 # Kick-start the process.
 client = new FeedHoseClient 'http://hose.scripting.com/'
