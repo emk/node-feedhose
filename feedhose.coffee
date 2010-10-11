@@ -63,6 +63,7 @@ class exports.Client extends events.EventEmitter
       # Fix strange JSON encoding.
       items_or_item = json['items']['item']
       items = if items_or_item.length? then items_or_item else [items_or_item]
+      items.reverse()
       for item in items
         @emit('item', item)
     @_request_items()
