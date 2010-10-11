@@ -1,14 +1,32 @@
 #!/usr/bin/env coffee
 
 # Require the modules we need.
-http = require 'http'
-url = require 'url'
-events = require 'events'
-socket_io = require 'socket.io'
+sys = require 'sys'
+express = require 'express'
+socket_io = require './vendor/Socket.IO-node'
 feedhose = require './feedhose'
 
-# Kick-start the process.
-client = new feedhose.Client 'http://hose.scripting.com/'
-client.on 'item', (item) ->
+# Set up a web server.
+app = express.createServer()
+app.configure ->
+  app.use app.router
+  app.use express.staticProvider(__dirname + '/public')
+app.listen 3001
+
+# Kick-start our feedhose connection.
+feed = new feedhose.Client 'http://hose.scripting.com/'
+feed.on 'item', (item) ->
   console.log item['title']
   console.log item['link']
+
+# Hook up a socket.io server.
+socket_server = socket_io.listen app
+socket_server.on 'connection', (client) ->
+  route_to_client = (item) -> client.send item
+  feed.on 'item', route_to_client
+  client.on 'message', (data) ->
+    # Ignore inbound messages.
+  client.on 'disconnect', () ->
+    feed.removeListener 'item', route_to_client
+  client.on 'error', () ->
+    feed.removeListener 'item', route_to_client

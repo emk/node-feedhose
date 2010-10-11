@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <title>Feed Nozzle</title>
+  </head>
+  <body>
+    <h1>Feed Nozzle</h1>
+    
+    <p id="connecting">Connecting to feedhose...</p>
+      
+    <div id="hose">
+    </div>
+
+    <!-- Let Google pay to host jQuery for us.  Scripts are at the bottom
+         to improve page load speed. -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
+    <!-- Use socket.io to do highly portable long polling, websockets, etc.:
+         Whatever will be fastest for a given browser. -->
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script> 
+
+    <!-- Primitive HTML template support. -->
+    <script type="text/javascript" src="/microtemplating.js"></script>
+
+    <!-- HTML template for an RSS item. -->
+    <script id="item_tmpl" type="text/html">
+      <div class="item">
+        <h3><a href="<%= to_html(link) %>"><%= to_html(title) %></h3>
+      </div>
+    </script>
+
+    <!-- The actual code. -->
+    <script type="text/javascript">
+
+// Convert a string to HTML.
+this.to_html = function (str) {
+  return str.replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function connectToServer() {
+  var socket = new io.Socket();
+  socket.on('connect', function () {
+    $('#connecting').hide();
+  });
+  socket.on('message', function (item) {
+    $('#hose').prepend(tmpl('item_tmpl', item));
+  });
+  socket.connect();
+}
+
+// Ask jQuery to run this code once the page is fully loaded.
+$(connectToServer);
+    </script>
+  </body>
+</html>
