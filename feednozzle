@@ -15,15 +15,29 @@ feed.on 'item', (item) ->
 
 # Set up a web server.
 app = express.createServer()
+app.configure ->
+  app.use app.router
+  app.use express.staticProvider(__dirname + '/public')
+
+# Query this URL to get our current server stats.
 app.get "/stats", (req, res) ->
   console.log "/stats"
   stats =
+    time: utilities.iso8601(new Date())
     clients: feed.listeners('item').length - 1
     lastResponse: utilities.iso8601(feed.last_response)
   res.contentType 'application/json'
   res.send JSON.stringify(stats)
-app.use express.staticProvider(__dirname + '/public')
-app.listen 8000
+
+# You can query this URL with monit to see if the server is live.
+app.get "/live", (req, res) ->
+  if new Date() - feed.last_response > 15*60*1000
+    res.send "Connection lost?\n", 500
+  else
+    res.send "Looks good.\n", 200
+
+# Serve on port 8000 by default.
+app.listen(parseInt(process.env['FEEDNOZZLE_PORT'] ? '8000'))
 
 # Hook up a socket.io server.
 socket_server = socket_io.listen app
