@@ -73,11 +73,12 @@ function connectToServer() {
   });
   socket.on('message', function (item) {
     // If our connection is more than 5 seconds old, don't animate anything.
+    // Otherwise, do a slide animation.
     var html = $(tmpl('item_tmpl', item));
     if (getTime() - connected_at < 5000) {
       html.prependTo('#hose');
     } else {
-      $('.item').stop(true, true);
+      $('.item').stop(true, true); // Finish existing animations now.
       $(tmpl('item_tmpl', item)).hide().prependTo('#hose').slideDown();
     }
   });
