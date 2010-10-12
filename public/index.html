@@ -28,6 +28,7 @@
     <script id="item_tmpl" type="text/html">
       <div class="item">
         <h3><a href="<%= to_html(link) %>"><%= html_sanitize(title) %></a></h3>
+        <p class="feed_name"><a href="<%= to_html(feedLink) %>"><%= to_html(feedTitle) %></a></p>
         <div class="description">
           <%= html_sanitize(description) %>
         </div>
