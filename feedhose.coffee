@@ -14,6 +14,7 @@ class exports.Client extends events.EventEmitter
     @_host = parsed_url['host']
     @_pathname = parsed_url['pathname'] ? '/'
     @_http_client = http.createClient @_port, @_host
+    @_http_client.on 'error', @_on_error
     @_request_items()
 
   # Figure out which URL path to query.
