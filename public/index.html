@@ -68,6 +68,34 @@ function getTime() {
   return new Date().getTime();
 }
 
+// The GUIDs for all the items we've seen so far.  This allows us to
+// suppress duplicates.
+var guids = {};
+
+// Get the GUID of an RSS item.  If we want to handle feeds without
+// GUIDs, then we could fall back to links and titles here.
+function itemGuid(item) {
+  return item['guid']['value'];
+}
+
+// Render an item, and optionally animate its appearance on the page.
+function renderItem(item, animate) {
+  // Have we already rendered this item?  If so, bail.
+  var guid = itemGuid(item);
+  if (guids[guid])
+    return;
+
+  // Render our item as HTML, and optionally animate it into place.
+  var html = $(tmpl('item_tmpl', item));
+  if (animate) {
+    html.prependTo('#hose');
+  } else {
+    $('.item').stop(true, true); // Finish existing animations now.
+    $(tmpl('item_tmpl', item)).hide().prependTo('#hose').slideDown();
+  }
+}
+
+// Connect to the server, and handle our responses.
 function connectToServer() {
   $('#disconnected').hide();
   $('#connecting').show();
@@ -81,13 +109,7 @@ function connectToServer() {
   socket.on('message', function (item) {
     // If our connection is more than 5 seconds old, don't animate anything.
     // Otherwise, do a slide animation.
-    var html = $(tmpl('item_tmpl', item));
-    if (getTime() - connected_at < 5000) {
-      html.prependTo('#hose');
-    } else {
-      $('.item').stop(true, true); // Finish existing animations now.
-      $(tmpl('item_tmpl', item)).hide().prependTo('#hose').slideDown();
-    }
+    renderItem(item, getTime() - connected_at < 5000);
   });
   socket.on('disconnect', reconnect);
 }
