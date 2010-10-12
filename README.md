@@ -28,7 +28,9 @@ First, you'll need an Ubuntu 10.10 box, or something reasonably similar.
 I'm using an EC2 t1.micro image running Ubuntu 10.10 ami-508c7839.  This
 costs me about 2 cents/hour.
 
-Install `git`, clone this repository, and run the install script:
+First, open up port 8000 on your EC2 security group.
+
+Next, install `git`, clone this repository, and run the install script:
 
     sudo apt-get update && sudo apt-get upgrade
     sudo apt-get install git

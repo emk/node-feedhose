@@ -11,7 +11,7 @@ app = express.createServer()
 app.configure ->
   app.use app.router
   app.use express.staticProvider(__dirname + '/public')
-app.listen 3001
+app.listen 8000
 
 # Kick-start our feedhose connection.
 feed = new feedhose.Client 'http://hose.scripting.com/'

@@ -54,5 +54,5 @@ echo
 echo "Then you should be able to connect at:"
 echo
 HOSTNAME=`ec2metadata | grep '^public-hostname:' | awk '{print $2}'`
-echo "  http://$HOSTNAME:3001/"
+echo "  http://$HOSTNAME:8000/"
 
