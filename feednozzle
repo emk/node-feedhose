@@ -21,7 +21,6 @@ app.configure ->
 
 # Query this URL to get our current server stats.
 app.get "/stats", (req, res) ->
-  console.log "/stats"
   stats =
     time: utilities.iso8601(new Date())
     clients: feed.listeners('item').length - 1
