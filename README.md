@@ -14,13 +14,15 @@ changed items as JSON.
 What's here:
 
 * `feedhose.js`: An experimental protocol library.
-* `feednozzle`: A Socket.io-based server.
+* `feednozzle`: A [Socket.io][sio]-based server.
 * `public/index.html`: A Socket.io-based web client.
 
 Why do I use Socket.io to talk to the browser, and not the regular feedhose
 protocol?  Basically, long-polling has some issues with certain browsers
 and firewalls, and Socket.io offers a dead-simple API that deals with all
-those headaches.
+those headaches.  It also works with mobile phones, or so I hear.
+
+[sio]: http://socket.io/
 
 ## Installing on an Ubuntu
 
