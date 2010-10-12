@@ -31,8 +31,9 @@ costs me about 2 cents/hour.
 Install `git`, clone this repository, and run the install script:
 
     sudo apt-get update && sudo apt-get upgrade
-    sudo apt-get install git-core
-    git clone <git url to this repo>
+    sudo apt-get install git
+    git clone git://github.com/emk/node-feedhose.git
+    cd node-feedhose
     ./ubuntu-install
 
 This will instruct you on how to proceed.
