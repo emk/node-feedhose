@@ -87,7 +87,7 @@ function connectToServer() {
 // Schedule a reconnection attempt shortly.  Note that this function
 // does not currently get called if a connection attempt fails.
 function reconnect() {
-    setTimeout(connectToServer, 5000);
+    setTimeout(connectToServer, 30*1000);
 }
 
 // Ask jQuery to run this code once the page is fully loaded.
