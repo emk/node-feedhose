@@ -4,8 +4,10 @@
 set -e
 
 # Make a directory for installing Node.js.
-sudo mkdir /opt/node
-sudo chown -R ubuntu.ubuntu /opt/node
+if [ ! -d /opt-node ]; then
+  sudo mkdir /opt/node
+  sudo chown -R ubuntu.ubuntu /opt/node
+fi
 sudo cp extras/nodejs.sh /etc/profile.d/nodejs.sh
 
 # Install necessary Ubuntu packages.
@@ -16,7 +18,9 @@ git submodule update --init --recursive
 
 # Check out and build Node.js.
 cd vendor
-git clone http://github.com/ry/node.git
+if [ ! -d node ]; then
+  git clone http://github.com/ry/node.git
+fi
 cd node
 git checkout 32aadd94
 ./configure --prefix=/opt/node
@@ -25,7 +29,9 @@ cd ../..
 
 # Check out and build npm.
 cd vendor
-git clone http://github.com/isaacs/npm.git
+if [ ! -d npm ]; then
+  git clone http://github.com/isaacs/npm.git
+fi
 cd npm
 git checkout v0.2.3-6
 make dev
