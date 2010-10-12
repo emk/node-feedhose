@@ -22,6 +22,11 @@ feed.on 'item', (item) ->
 # Hook up a socket.io server.
 socket_server = socket_io.listen app
 socket_server.on 'connection', (client) ->
+  # Prime the client with some recent items.
+  for item in feed.recent_items
+    client.send item
+
+  # Route new items to the client as they arrive.
   route_to_client = (item) -> client.send item
   feed.on 'item', route_to_client
   client.on 'message', (data) ->

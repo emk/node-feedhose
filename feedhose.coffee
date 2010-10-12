@@ -9,23 +9,24 @@ class exports.Client extends events.EventEmitter
   constructor: (@url) ->
     @on 'error', @_on_listener_error
     parsed_url = url.parse(@url)
-    @port = parsed_url['port'] || 80
-    @host = parsed_url['host']
-    @pathname = parsed_url['pathname'] ? '/'
-    @http_client = http.createClient @port, @host
+    @recent_items = []
+    @_port = parsed_url['port'] || 80
+    @_host = parsed_url['host']
+    @_pathname = parsed_url['pathname'] ? '/'
+    @_http_client = http.createClient @_port, @_host
     @_request_items()
 
   # Figure out which URL path to query.
   _path: ->
     if @seed?
-      "#{@pathname}?format=json&seed=#{@seed}"
+      "#{@_pathname}?format=json&seed=#{@seed}"
     else
-      "#{@pathname}recent?format=json"
+      "#{@_pathname}recent?format=json"
 
   # Start an HTTP request.
   _request_items: =>
     try
-      req = @http_client.request 'GET', @_path(), host: @host
+      req = @_http_client.request 'GET', @_path(), host: @_host
       req.end()
       req.on 'response', @_on_response
       req.on 'error', @_on_error
@@ -65,8 +66,15 @@ class exports.Client extends events.EventEmitter
       items = if items_or_item.length? then items_or_item else [items_or_item]
       items.reverse()
       for item in items
+        @_remember_item(item)
         @emit('item', item)
     @_request_items()
+
+  # Remember the most recent items so we can prime new connections.
+  _remember_item: (item) ->
+    @recent_items.push(item)
+    if @recent_items.length > 10
+      @recent_items = @recent_items.slice(1)
 
   # Log an error to the console, wait 3 minutes, and try again.
   _on_error: (error) =>
