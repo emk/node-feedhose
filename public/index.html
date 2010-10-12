@@ -27,7 +27,7 @@
     <!-- HTML template for an RSS item. -->
     <script id="item_tmpl" type="text/html">
       <div class="item">
-        <h3><a href="<%= to_html(link) %>"><%= to_html(title) %></a></h3>
+        <h3><a href="<%= to_html(link) %>"><%= html_sanitize(title) %></a></h3>
         <div class="description">
           <%= html_sanitize(description) %>
         </div>
