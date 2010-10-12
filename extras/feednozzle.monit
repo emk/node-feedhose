@@ -1,0 +1,7 @@
+check host nodejs with address 127.0.0.1
+    start program = "/sbin/start feednozzle"
+    stop program  = "/sbin/stop feednozzle"
+    if failed port 8000 protocol HTTP
+        request /
+        with timeout 10 seconds
+        then restart

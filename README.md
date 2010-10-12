@@ -43,6 +43,23 @@ Next, install `git`, clone this repository, and run the install script:
 
 This will instruct you on how to proceed.
 
+## Making it robust (optional!)
+
+Set up `upstart` and `monit`.  This is very Ubuntu-specific.
+
+    sudo apt-get install monit
+    sudo cp extras/feednozzle.conf.upstart /etc/init/feednozzle.conf
+    sudo cp extras/feednozzle.monit /etc/monit/conf.d/feednozzle
+
+Next, edit `/etc/monit/monitrc` to taste.  10 second checks are fine.  You
+may now start your server and your monitor process.
+
+    sudo start feednozzle
+    sudo /etc/init.d/monit start
+
+Note that I haven't made any attempt to rotate logs or otherwise act as a
+well-behaved daemon yet.  This is an exercise for another day.
+
 ## What's this "coffee" stuff, anyways?
 
 [CoffeeScript][cs] is a preprocessor for JavaScript.  I use it for several

@@ -1,0 +1,15 @@
+# Installed at /etc/init/feednozzle.conf.  Runs our feednozzle server as
+# a daemon.  Based on http://howtonode.org/deploying-node-upstart-monit.
+
+description "feednozzle server"
+author      "Eric Kidd"
+
+start on startup
+stop on shutdown
+
+script
+    export HOME="/root"
+    PATH="/opt/node/bin:$PATH"
+    # Run it as root, so it can serve a Flash policy file on port 843.
+    exec /home/ubuntu/node-feedhose/feednozzle 2>&1 >> /var/log/feednozzle.log
+end script
