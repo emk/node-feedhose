@@ -40,4 +40,15 @@ Next, install `git`, clone this repository, and run the install script:
 
 This will instruct you on how to proceed.
 
-    
+## What's this "coffee" stuff, anyways?
+
+[CoffeeScript][cs] is a preprocessor for JavaScript.  I use it for several
+files in `node-feedhose`.  Thanks to CoffeeScript, I don't need spend quite
+so much time writing ugly `function () {` prefixes, and I can declare
+classes without nearly so much boilerplate code.  Go look at the [pretty
+examples][cs].
+
+I haven't decided whether to translate `node-feedhose` to regular
+JavaScript.
+
+[cs]: http://jashkenas.github.com/coffee-script/
