@@ -9,7 +9,7 @@ sudo chown -R ubuntu.ubuntu /opt/node
 sudo cp extras/nodejs.sh /etc/profile.d/nodejs.sh
 
 # Install necessary Ubuntu packages.
-sudo apt-get install build-essential
+sudo apt-get install build-essential libssl-dev
 
 # Check out the rest of our support libraries.
 git submodule update --init --recursive
