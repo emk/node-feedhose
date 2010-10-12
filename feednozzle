@@ -5,19 +5,25 @@ sys = require 'sys'
 express = require 'express'
 socket_io = require './vendor/Socket.IO-node'
 feedhose = require './feedhose'
+utilities = require './utilities'
 
-# Set up a web server.
-app = express.createServer()
-app.configure ->
-  app.use app.router
-  app.use express.staticProvider(__dirname + '/public')
-app.listen 8000
-
-# Kick-start our feedhose connection.
+# Kick-start our feedhose client.
 feed = new feedhose.Client 'http://hose.scripting.com/'
 feed.on 'item', (item) ->
   console.log item['title']
   console.log item['link']
+
+# Set up a web server.
+app = express.createServer()
+app.get "/stats", (req, res) ->
+  console.log "/stats"
+  stats =
+    clients: feed.listeners('item').length - 1
+    lastResponse: utilities.iso8601(feed.last_response)
+  res.contentType 'application/json'
+  res.send JSON.stringify(stats)
+app.use express.staticProvider(__dirname + '/public')
+app.listen 8000
 
 # Hook up a socket.io server.
 socket_server = socket_io.listen app

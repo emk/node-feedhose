@@ -10,6 +10,7 @@ class exports.Client extends events.EventEmitter
     @on 'error', @_on_listener_error
     parsed_url = url.parse(@url)
     @recent_items = []
+    @last_response = null
     @_port = parsed_url['port'] || 80
     @_host = parsed_url['host']
     @_pathname = parsed_url['pathname'] ? '/'
@@ -49,6 +50,7 @@ class exports.Client extends events.EventEmitter
           @_on_error(error)
       res.on 'end', =>
         try
+          @last_response = new Date()
           @_on_json @data.join('')
           @data = []
         catch error
