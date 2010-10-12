@@ -1,5 +1,4 @@
-WARNING: This is a hack in progress.  You'd have to be pretty brave to want
-to run it.
+WARNING: This is a hack in progress.  Some assembly required.
 
 `node-feedhose` is an experimental client for Dave Winer's feedhose
 protocol.  See [Feedhose -- a firehose for feeds][fh1] and [RSS data in
@@ -27,7 +26,7 @@ those headaches.  It also works with mobile phones, or so I hear.
 [cs]: http://jashkenas.github.com/coffee-script/
 [code]: http://nodejs.org/
 
-## Installing on an Ubuntu
+## Installing on Ubuntu
 
 First, you'll need an Ubuntu 10.10 box, or something reasonably similar.
 I'm using an EC2 `t1.micro` image running Ubuntu 10.10 ami-508c7839.  This
