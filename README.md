@@ -31,7 +31,9 @@ I'm using an EC2 t1.micro image running Ubuntu 10.10 ami-508c7839.  This
 costs me about 2 cents/hour.  Feel free to run a bigger instance--it will
 definitely take less time to install Node.js.
 
-First, open up port `8000` on your EC2 security group.
+First, open up ports `8000` and `843` on your EC2 security group.  The
+latter is needed to serve up some Flash policy files used as a fallback by
+`Socket.io`.
 
 Next, install `git`, clone this repository, and run the install script:
 
