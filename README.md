@@ -55,6 +55,9 @@ Set up `upstart` and `monit`.  This is very Ubuntu-specific.
     sudo cp extras/feednozzle.conf.upstart /etc/init/feednozzle.conf
     sudo cp extras/feednozzle.monit /etc/monit/conf.d/feednozzle
 
+These configuration files will serve on port `80`, not `8000`, so be sure
+to update your EC2 security group to allow traffic on port `80`.
+
 Next, edit `/etc/monit/monitrc` to taste.  10 second checks are fine.  You
 may now start your server and your monitor process.
 

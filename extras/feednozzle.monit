@@ -1,7 +1,9 @@
-check host nodejs with address 127.0.0.1
+# Monitor feednozzle and restart it if it dies.
+# Based on http://howtonode.org/deploying-node-upstart-monit.
+check host feednozzle with address 127.0.0.1
     start program = "/sbin/start feednozzle"
     stop program  = "/sbin/stop feednozzle"
-    if failed port 8000 protocol HTTP
-        request /
+    if failed port 80 protocol HTTP
+        request /live
         with timeout 10 seconds
         then restart
