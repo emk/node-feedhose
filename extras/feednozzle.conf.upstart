@@ -11,6 +11,7 @@ script
     export HOME="/root"
     PATH="/opt/node/bin:$PATH"
     export FEEDNOZZLE_PORT=80
+    ulimit -n 30000
     # Run it as root, so it can serve a Flash policy file on port 843.
     exec /home/ubuntu/node-feedhose/feednozzle 2>&1 >> /var/log/feednozzle.log
 end script
