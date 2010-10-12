@@ -10,6 +10,9 @@ if [ ! -d /opt/node ]; then
 fi
 sudo cp extras/nodejs.sh /etc/profile.d/nodejs.sh
 
+# Make sure we can find Node.js.
+source /etc/profile.d/nodejs.sh
+
 # Install necessary Ubuntu packages.
 sudo apt-get install build-essential libssl-dev
 
