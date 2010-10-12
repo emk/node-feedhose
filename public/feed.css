@@ -1,3 +1,7 @@
+#disconnected { 
+  color: red;
+}
+
 .item { 
   margin-bottom: 20px;
 }

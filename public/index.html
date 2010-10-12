@@ -16,6 +16,9 @@
     </p>
 
     <p id="connecting">Connecting to feedhose...</p>
+
+    <p id="disconnected" style: "display: none">Lost connection.  Will try
+    again in a bit, but feel free to reload.</p>
       
     <div id="hose">
     </div>
@@ -66,6 +69,8 @@ function getTime() {
 }
 
 function connectToServer() {
+  $('#disconnected').hide();
+  $('#connecting').show();
   var connected_at;
   var socket = new io.Socket();
   socket.connect();
@@ -90,7 +95,8 @@ function connectToServer() {
 // Schedule a reconnection attempt shortly.  Note that this function
 // does not currently get called if a connection attempt fails.
 function reconnect() {
-    setTimeout(connectToServer, 30*1000);
+  $('#disconnected').show();
+  setTimeout(connectToServer, 30*1000);
 }
 
 // Ask jQuery to run this code once the page is fully loaded.
