@@ -5,4 +5,9 @@
 
 .item .feed_name a {
   color: gray;
+  text-decoration: none;
+}
+
+.item .feed_name a:hover {
+  text-decoration: underline;
 }
