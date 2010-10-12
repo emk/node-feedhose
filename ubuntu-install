@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# Die hard on all errors.
+set -e
+
+# Make a directory for installing Node.js.
+sudo mkdir /opt/node
+sudo chown -R ubuntu.ubuntu /opt/node
+sudo cp extras/nodejs.sh /etc/profile.d/nodejs.sh
+
+# Install necessary Ubuntu packages.
+sudo apt-get install build-essential
+
+# Check out the rest of our support libraries.
+git submodule update --init --recursive
+
+# Check out and build Node.js.
+cd vendor
+git clone http://github.com/ry/node.git
+cd node
+git checkout 32aadd94
+./configure --prefix=/opt/node
+make install
+cd ../..
+
+# Check out and build npm.
+cd vendor
+git clone http://github.com/isaacs/npm.git
+cd npm
+git checkout v0.2.3-6
+make dev
+cd ../..
+
+# Install Node.js packages.
+npm install coffee-script@0.9.4
+npm install express@1.0.0rc3
+
+# Tell the user to set the necessary environment variables.
+echo "Now run the following command to add 'node' to your PATH:"
+echo
+echo "  source /etc/profile.d/nodejs.sh"
+echo
+echo "And run:"
+echo
+echo "  ./feednozzle"
+echo
+echo "Then you should be able to connect at:"
+echo
+HOSTNAME=`ec2metadata | grep '^public-hostname:' | awk '{print $2}'`
+echo "  http://$HOSTNAME:3001/"
+
