@@ -48,14 +48,28 @@ this.to_html = function (str) {
     .replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
+// Get the current time, in milliseconds.
+function getTime() {
+  return new Date().getTime();
+}
+
 function connectToServer() {
+  var connected_at;
   var socket = new io.Socket();
   socket.connect();
   socket.on('connect', function () {
     $('#connecting').hide();
+    connected_at = getTime();
   });
   socket.on('message', function (item) {
-    $('#hose').prepend(tmpl('item_tmpl', item));
+    // If our connection is more than 5 seconds old, don't animate anything.
+    var html = $(tmpl('item_tmpl', item));
+    if (getTime() - connected_at < 5000) {
+      html.prependTo('#hose');
+    } else {
+      $('.item').stop(true, true);
+      $(tmpl('item_tmpl', item)).hide().prependTo('#hose').slideDown();
+    }
   });
   socket.on('disconnect', reconnect);
 }
