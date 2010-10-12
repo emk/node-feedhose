@@ -13,13 +13,13 @@ changed items as JSON.
 
 What's here:
 
-* `feedhose.js`: An experimental protocol library.
-* `feednozzle`: A [Socket.io][sio]-based server.
-* `public/index.html`: A Socket.io-based web client.
+* `feedhose.coffee`: An experimental protocol library.
+* `feednozzle`: A [Socket.IO][sio]-based server.
+* `public/index.html`: A Socket.IO-based web client.
 
-Why do I use Socket.io to talk to the browser, and not the regular feedhose
+Why do I use Socket.IO to talk to the browser, and not the regular feedhose
 protocol?  Basically, long-polling has some issues with certain browsers
-and firewalls, and Socket.io offers a dead-simple API that deals with all
+and firewalls, and Socket.IO offers a dead-simple API that deals with all
 those headaches.  It also works with mobile phones, or so I hear.
 
 [sio]: http://socket.io/
@@ -27,13 +27,13 @@ those headaches.  It also works with mobile phones, or so I hear.
 ## Installing on an Ubuntu
 
 First, you'll need an Ubuntu 10.10 box, or something reasonably similar.
-I'm using an EC2 t1.micro image running Ubuntu 10.10 ami-508c7839.  This
+I'm using an EC2 `t1.micro` image running Ubuntu 10.10 ami-508c7839.  This
 costs me about 2 cents/hour.  Feel free to run a bigger instance--it will
 definitely take less time to install Node.js.
 
 First, open up ports `8000` and `843` on your EC2 security group.  The
 latter is needed to serve up some Flash policy files used as a fallback by
-`Socket.io`.
+Socket.IO.
 
 Next, install `git`, clone this repository, and run the install script:
 
