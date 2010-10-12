@@ -75,7 +75,7 @@ var guids = {};
 // Get the GUID of an RSS item.  If we want to handle feeds without
 // GUIDs, then we could fall back to links and titles here.
 function itemGuid(item) {
-  return item['guid']['value'];
+  return item['guid']['#value'];
 }
 
 // Render an item, and optionally animate its appearance on the page.
