@@ -18,13 +18,19 @@
          Whatever will be fastest for a given browser. -->
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 
+    <!-- Sanitize HTML so nobody sneaks in script tags and pwns us. -->
+    <script type="text/javascript" src="/html-sanitizer.js"></script>
+
     <!-- Primitive HTML template support. -->
     <script type="text/javascript" src="/microtemplating.js"></script>
 
     <!-- HTML template for an RSS item. -->
     <script id="item_tmpl" type="text/html">
       <div class="item">
-        <h3><a href="<%= to_html(link) %>"><%= to_html(title) %></h3>
+        <h3><a href="<%= to_html(link) %>"><%= to_html(title) %></a></h3>
+        <div class="description">
+          <%= html_sanitize(description) %>
+        </div>
       </div>
     </script>
 
