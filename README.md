@@ -28,9 +28,10 @@ those headaches.  It also works with mobile phones, or so I hear.
 
 First, you'll need an Ubuntu 10.10 box, or something reasonably similar.
 I'm using an EC2 t1.micro image running Ubuntu 10.10 ami-508c7839.  This
-costs me about 2 cents/hour.
+costs me about 2 cents/hour.  Feel free to run a bigger instance--it will
+definitely take less time to install Node.js.
 
-First, open up port 8000 on your EC2 security group.
+First, open up port `8000` on your EC2 security group.
 
 Next, install `git`, clone this repository, and run the install script:
 
