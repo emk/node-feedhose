@@ -4,7 +4,7 @@
 set -e
 
 # Make a directory for installing Node.js.
-if [ ! -d /opt-node ]; then
+if [ ! -d /opt/node ]; then
   sudo mkdir /opt/node
   sudo chown -R ubuntu.ubuntu /opt/node
 fi
