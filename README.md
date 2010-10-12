@@ -13,7 +13,8 @@ changed items as JSON.
 
 What's here:
 
-* `feedhose.coffee`: An experimental protocol library.
+* `feedhose.coffee`: An experimental protocol library for [Node.js][node],
+   written using [CoffeeScript][cs].
 * `feednozzle`: A [Socket.IO][sio]-based server.
 * `public/index.html`: A Socket.IO-based web client.
 
@@ -23,6 +24,8 @@ and firewalls, and Socket.IO offers a dead-simple API that deals with all
 those headaches.  It also works with mobile phones, or so I hear.
 
 [sio]: http://socket.io/
+[cs]: http://jashkenas.github.com/coffee-script/
+[code]: http://nodejs.org/
 
 ## Installing on an Ubuntu
 
@@ -72,5 +75,3 @@ examples][cs].
 
 I haven't decided whether to translate `node-feedhose` to regular
 JavaScript.
-
-[cs]: http://jashkenas.github.com/coffee-script/
