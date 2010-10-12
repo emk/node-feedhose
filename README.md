@@ -15,7 +15,7 @@ What's here:
 
 * `feedhose.js`: An experimental protocol library.
 * `feednozzle`: A Socket.io-based server.
-* `public`: A Socket.io-based web client.
+* `public/index.html`: A Socket.io-based web client.
 
 Why do I use Socket.io to talk to the browser, and not the regular feedhose
 protocol?  Basically, long-polling has some issues with certain browsers
