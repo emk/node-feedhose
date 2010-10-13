@@ -61,6 +61,6 @@ socket_server.on 'connection', (client) ->
 # Broadcast a heartbeat to our clients.  We don't trust Socket.io to
 # keep pages alive.
 broadcast_heartbeat = ->
-  for client in socket_server.clients
+  for key, client of socket_server.clients
     setTimeout((-> client.send command: 'heartbeat'), 0)
 setInterval broadcast_heartbeat, 2*60*1000
