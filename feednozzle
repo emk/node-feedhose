@@ -41,16 +41,23 @@ app.listen(parseInt(process.env['FEEDNOZZLE_PORT'] ? '8000'))
 # Hook up a socket.io server.
 socket_server = socket_io.listen app
 socket_server.on 'connection', (client) ->
+  send_item_to_client = (item) -> client.send item: item
+
   # Prime the client with some recent items.
   for item in feed.recent_items
-    client.send item
+    send_item_to_client item
 
   # Route new items to the client as they arrive.
-  route_to_client = (item) -> client.send item
-  feed.on 'item', route_to_client
+  feed.on 'item', send_item_to_client
   client.on 'message', (data) ->
     # Ignore inbound messages.
   client.on 'disconnect', () ->
-    feed.removeListener 'item', route_to_client
+    feed.removeListener 'item', send_item_to_client
   client.on 'error', () ->
-    feed.removeListener 'item', route_to_client
+    feed.removeListener 'item', send_item_to_client
+
+# Broadcast a heartbeat to our clients.  We don't trust Socket.io to
+# keep pages alive.
+broadcast_heartbeat = ->
+  socket_server.broadcast command: 'heartbeat'
+setInterval broadcast_heartbeat, 2*60*1000

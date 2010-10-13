@@ -100,6 +100,17 @@ function renderItem(item, animate) {
 function connectToServer() {
   $('#disconnected').hide();
   $('#connecting').show();
+
+  // Set up a heartbeat timer that reloads the page if we lose a connection.
+  // Socket.io tries to handle this, but occasionally fails.
+  var last_heartbeat = new Date();
+  function reload_if_dead() {
+    if (new Date() - last_heartbeat > 5*60*1000)
+      window.location.reload();
+  }
+  setInterval(reload_if_dead, 60*1000);
+
+  // Connect to the server.
   var connected_at;
   var socket = new io.Socket();
   socket.connect();
@@ -107,10 +118,17 @@ function connectToServer() {
     $('#connecting').hide();
     connected_at = getTime();
   });
-  socket.on('message', function (item) {
-    // If our connection is more than 5 seconds old, don't animate anything.
-    // Otherwise, do a slide animation.
-    renderItem(item, getTime() - connected_at < 5000);
+
+  // Process messages from the server.
+  socket.on('message', function (msg) {
+    if (msg['item']) {
+      // If our connection is more than 5 seconds old, don't animate anything.
+      // Otherwise, do a slide animation.
+      renderItem(msg['item'], getTime() - connected_at < 5000);
+    } else if (msg['command'] === 'heartbeat') {
+      // Update our heartbeat.
+      last_heartbeat = new Date();
+    }
   });
   socket.on('disconnect', reconnect);
 }
