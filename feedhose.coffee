@@ -21,9 +21,9 @@ class exports.Client extends events.EventEmitter
   # Figure out which URL path to query.
   _path: ->
     if @seed?
-      "#{@_pathname}?format=json&seed=#{@seed}"
+      "#{@_pathname}?name=nytimes&format=json&seed=#{@seed}"
     else
-      "#{@_pathname}recent?format=json"
+      "#{@_pathname}recent?name=nytimes&format=json"
 
   # Start an HTTP request.
   _request_items: =>
