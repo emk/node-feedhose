@@ -42,7 +42,8 @@ app.listen(parseInt(process.env['FEEDNOZZLE_PORT'] ? '8000'))
 # Hook up a socket.io server.
 socket_server = socket_io.listen app
 socket_server.on 'connection', (client) ->
-  send_item_to_client = (item) -> client.send item: item
+  send_item_to_client = (item) ->
+    setTimeout((-> client.send item: item), 0);
 
   # Prime the client with some recent items.
   for item in feed.recent_items
@@ -60,5 +61,6 @@ socket_server.on 'connection', (client) ->
 # Broadcast a heartbeat to our clients.  We don't trust Socket.io to
 # keep pages alive.
 broadcast_heartbeat = ->
-  socket_server.broadcast command: 'heartbeat'
+  for client in socket_server.clients
+    setTimeout((-> client.send command: 'heartbeat'), 0)
 setInterval broadcast_heartbeat, 2*60*1000
