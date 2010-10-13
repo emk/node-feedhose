@@ -141,7 +141,7 @@ function connectToServer() {
 // does not currently get called if a connection attempt fails.
 function reconnect() {
   $('#disconnected').show();
-  setTimeout(connectToServer, 30*1000);
+  setTimeout(connectToServer, (20+30*Math.random())*1000);
 }
 
 // Ask jQuery to run this code once the page is fully loaded.
