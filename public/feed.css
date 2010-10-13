@@ -1,3 +1,12 @@
+h1 { 
+  margin-bottom: 2px;
+}
+
+.about {
+  margin-top: 0px;
+  margin-bottom: 40px;
+}
+
 #disconnected { 
   color: red;
 }
@@ -8,7 +17,7 @@
 
 .item h3 { 
   margin-top: 0;
-  margin-bottom: 10px;
+  margin-bottom: 2px;
 }
 
 .item .feed_name {
