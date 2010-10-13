@@ -13,6 +13,10 @@ h1 {
   padding-right: 10px;
 }
 
+.about a {
+  color: gray;
+}
+
 #disconnected { 
   color: red;
 }
