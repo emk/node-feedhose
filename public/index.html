@@ -84,6 +84,7 @@ function renderItem(item, animate) {
   var guid = itemGuid(item);
   if (guids[guid])
     return;
+  guids[guid] = true;
 
   // Render our item as HTML, and optionally animate it into place.
   var html = $(tmpl('item_tmpl', item));
