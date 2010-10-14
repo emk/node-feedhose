@@ -57,7 +57,7 @@ h1 {
 
 .item img.enclosure { 
   float: left;
-  padding-right: 20px;
+  margin-right: 20px;
   max-width: 200px;
   width: expression(this.width > 200 ? 200: true);
 }
