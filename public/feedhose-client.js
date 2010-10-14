@@ -25,12 +25,16 @@
     return hour + ":" + minute + am_pm;
   };
 
-  // Convert a string to HTML.
-  function toHtml(str) {
-    return str.replace(/&/g, "&amp;")
-      .replace(/"/g, "&quot;")
-      .replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  };
+  // A cache of template HTML.
+  var templates = {};
+
+  // Render an HTML template.  This interface is inspired by John Resig's
+  // microtemplating.
+  function tmpl(templateId, view) {
+    if (!templates.hasOwnProperty(templateId))
+      templates[templateId] = document.getElementById(templateId).innerHTML;
+    return Mustache.to_html(templates[templateId], view);
+  }
 
   // Get the current time, in milliseconds.
   function getTime() {
@@ -55,6 +59,14 @@
     if (guids[guid])
       return;
     guids[guid] = true;
+
+    // Clean up some fields so mustache can render them.
+    if (item['title'])
+      item['title'] = html_sanitize(item['title']);
+    if (item['description'])
+      item['description'] = html_sanitize(item['description']);
+    if (item['dateReceived'])
+      item['dateReceived'] = prettyDate(item['dateReceived']);
 
     // Render our item as HTML, and optionally animate it into place.
     var html = $(tmpl('item_tmpl', item));
@@ -114,11 +126,6 @@
     $('#disconnected').show();
     setTimeout(connectToServer, (20+30*Math.random())*1000);
   }
-
-  // Export some functions into the global namespace.
-  this.prettyDate = prettyDate;
-  this.toHtml = toHtml;
-  this.sanitize = html_sanitize;
 
   // Ask jQuery to run this code once the page is fully loaded.
   $(connectToServer);
