@@ -65,8 +65,8 @@
       item['title'] = html_sanitize(item['title']);
     if (item['description'])
       item['description'] = html_sanitize(item['description']);
-    if (item['dateReceived'])
-      item['dateReceived'] = prettyDate(item['dateReceived']);
+    if (item['receivedDate'])
+      item['receivedDate'] = prettyDate(item['receivedDate']);
 
     // Render our item as HTML, and optionally animate it into place.
     var html = $(tmpl('item_tmpl', item));
