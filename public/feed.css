@@ -59,7 +59,7 @@ h1 {
   float: left;
   margin-right: 20px;
   max-width: 200px;
-  width: expression(this.width > 200 ? 200: true);
+  width: expression(this.width > 200 ? 200 : this.width);
 }
 
 .clearfix { 
