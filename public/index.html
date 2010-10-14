@@ -51,7 +51,7 @@
         <% } %>
         <h3>
           <a href="<%= to_html(link) %>"><%= html_sanitize(title) %></a>
-          <span class="feed_name">(<a href="<%= to_html(feedLink) %>"><%= to_html(feedTitle) %></a> @ <%= to_html(pubDate) %>)</span>
+          <span class="feed_name">(<a href="<%= to_html(feedLink) %>"><%= to_html(feedTitle) %></a> @ <%= to_html(receivedDate) %>)</span>
         </h3>
         <div class="description">
           <%= html_sanitize(description) %>
