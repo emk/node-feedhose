@@ -125,9 +125,14 @@ function connectToServer() {
   // Process messages from the server.
   socket.on('message', function (msg) {
     if (msg['item']) {
-      // If our connection is more than 5 seconds old, don't animate anything.
-      // Otherwise, do a slide animation.
-      renderItem(msg['item'], getTime() - connected_at < 5000);
+      try {
+        // If our connection is more than 5 seconds old, don't animate anything.
+        // Otherwise, do a slide animation.
+        renderItem(msg['item'], getTime() - connected_at < 5000);
+      } catch (error) {
+        if (typeof(console) !== 'undefined')
+          console.log(error);
+      }
     } else if (msg['command'] === 'heartbeat') {
       // Update our heartbeat.
       last_heartbeat = new Date();
