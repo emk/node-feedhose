@@ -51,7 +51,7 @@
         <% } %>
         <h3>
           <a href="<%= to_html(link) %>"><%= html_sanitize(title) %></a>
-          <span class="feed_name">(<a href="<%= to_html(feedLink) %>"><%= to_html(feedTitle) %></a> @ <%= to_html(receivedDate) %>)</span>
+          <span class="feed_name">(<a href="<%= to_html(feedLink) %>"><%= to_html(feedTitle) %></a> @ <%= pretty_date(receivedDate) %>)</span>
         </h3>
         <div class="description">
           <%= html_sanitize(description) %>
@@ -62,6 +62,32 @@
 
     <!-- The actual code. -->
     <script type="text/javascript">
+
+// Convert an iso8601 date to one in the current time zone.
+this.pretty_date = function (date) {
+  var m = date.match(/^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d):/);
+  if (!m)
+    return to_html(date);
+  var d = new Date();
+  var utc = new Date(Date.UTC(parseInt(m[1]), parseInt(m[2])-1, parseInt(m[3]),
+                              parseInt(m[4]), parseInt(m[5])));
+
+  var hour = utc.getHours(), am_pm;
+  if (hour == 0) {
+    hour = 12;
+    am_pm = 'am';
+  } else if (hour < 12) {
+    am_pm = 'am';
+  } else {
+    am_pm = 'pm';
+    if (hour > 12)
+      hour -= 12;
+  }
+  var minute = utc.getMinutes() + '';
+  if (minute.length == 1)
+    minute = '0' + minute;
+  return hour + ":" + minute + am_pm;
+}
 
 // Convert a string to HTML.
 this.to_html = function (str) {

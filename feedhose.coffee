@@ -3,19 +3,6 @@ http = require 'http'
 url = require 'url'
 events = require 'events'
 
-# Pretty-print a date.
-prettyDate = (date) ->
-  hour = date.getHours()
-  if (hour < 12)
-    am_pm = 'am'
-  else
-    am_pm = 'pm'
-    hour -= 12
-  minute = "#{date.getMinutes()}"
-  if minute.length is 1
-    minute = "0#{minute}"
-  "#{hour}:#{minute}#{am_pm}"
-
 # Connects to a remote feedhose server and notifies us when new RSS items
 # arrive.
 class exports.Client extends events.EventEmitter
@@ -82,7 +69,7 @@ class exports.Client extends events.EventEmitter
       items = if items_or_item.length? then items_or_item else [items_or_item]
       items.reverse()
       for item in items
-        item['receivedDate'] = prettyDate(new Date())
+        item['receivedDate'] = new Date()
         @_remember_item(item)
         @emit('item', item)
     @_request_items()
